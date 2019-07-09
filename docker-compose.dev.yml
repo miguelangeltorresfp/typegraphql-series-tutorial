@@ -1,0 +1,35 @@
+version: "3"
+services:
+  postgres_typegraphql_series:
+    image: postgres
+    container_name: postgres_typegraphql_series
+    environment:
+      POSTGRES_PASSWORD: ""
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin_typegraphql_series:
+    image: dpage/pgadmin4
+    container_name: pgadmin_typegraphql_series
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "miguelangeltorresfp@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres_typegraphql_series
+
+  redis_typegraphql_series:
+    image: "redis:alpine"
+    container_name: redis_typegraphql_series
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+volumes:
+  postgres_data:
+  redis_data:
